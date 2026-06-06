@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0c0b10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Samandar — Workshop Index</title>
+<script>try{if(localStorage.getItem('theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0b10;
+    --bg-2:#15131d;
+    --ink:#f3efe6;
+    --muted:#928c80;
+    --line:rgba(243,239,230,.10);
+    --line-2:rgba(243,239,230,.18);
+    --on-accent:#0c0b10;
+    --serif:"Fraunces",Georgia,serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  [data-theme="light"]{
+    --bg:#f4f1ea;
+    --bg-2:#ffffff;
+    --ink:#1b1922;
+    --muted:#6b655c;
+    --line:rgba(27,25,34,.12);
+    --line-2:rgba(27,25,34,.20);
+    --on-accent:#1b1922;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--serif);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    position:relative;
+    min-height:100vh;
+    transition:background .4s ease,color .4s ease;
+  }
+
+  .glow{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(40rem 40rem at var(--mx,30%) var(--my,15%), rgba(124,131,255,.10), transparent 60%),
+      radial-gradient(34rem 34rem at 85% 90%, rgba(63,196,176,.07), transparent 60%);
+    transition:background .4s ease;
+  }
+  [data-theme="light"] .glow{opacity:.55}
+
+  .grain{
+    position:fixed;inset:-200%;z-index:1;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grain 7s steps(6) infinite;
+  }
+  [data-theme="light"] .grain{opacity:.035}
+  @keyframes grain{
+    0%{transform:translate(0,0)}10%{transform:translate(-3%,-4%)}
+    30%{transform:translate(2%,-2%)}50%{transform:translate(-1%,3%)}
+    70%{transform:translate(3%,2%)}90%{transform:translate(-2%,1%)}
+    100%{transform:translate(0,0)}
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 6vw}
+
+  /* ---------- header ---------- */
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:2.2rem 0 1.6rem;border-bottom:1px solid var(--line);
+    opacity:0;animation:rise .8s .1s forwards;gap:1rem;
+  }
+  .wordmark{
+    font-weight:600;letter-spacing:.18em;font-size:.82rem;
+    font-family:var(--mono);text-transform:uppercase;
+    display:flex;align-items:center;gap:.6rem;white-space:nowrap;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--ink);animation:pulse 2.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+
+  .header-right{display:flex;align-items:center;gap:1rem}
+  .theme-toggle{
+    width:34px;height:34px;border-radius:50%;
+    border:1px solid var(--line-2);background:transparent;color:var(--ink);
+    font-size:.95rem;cursor:pointer;display:grid;place-items:center;
+    transition:border-color .25s,transform .4s ease;flex-shrink:0;
+  }
+  .theme-toggle:hover{border-color:var(--ink);transform:rotate(35deg)}
+  .theme-toggle::before{content:"\2600"}
+  [data-theme="light"] .theme-toggle::before{content:"\263E"}
+
+  .meta{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;white-space:nowrap}
+  .meta a{color:var(--muted);text-decoration:none;transition:color .25s}
+  .meta a:hover{color:var(--ink)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:9vh 0 8vh}
+  .eyebrow{
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:2.2rem;
+    opacity:0;animation:rise .8s .25s forwards;
+  }
+  h1{
+    font-size:clamp(2.5rem,7.2vw,5.6rem);line-height:1.02;font-weight:400;
+    letter-spacing:-.02em;max-width:16ch;opacity:0;animation:rise 1s .35s forwards;
+  }
+  h1 .accent{
+    font-style:italic;
+    background:linear-gradient(100deg,#7c83ff,#3fc4b0);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .lede{
+    margin-top:2.4rem;font-size:clamp(1.05rem,1.7vw,1.35rem);line-height:1.55;
+    color:color-mix(in srgb,var(--ink) 80%,transparent);max-width:48ch;font-weight:300;
+    opacity:0;animation:rise 1s .5s forwards;
+  }
+
+  /* ---------- project list ---------- */
+  .list-label{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--muted);
+    padding-bottom:1.2rem;border-bottom:1px solid var(--line);
+    opacity:0;animation:rise .8s .6s forwards;
+  }
+
+  .project{
+    display:grid;grid-template-columns:auto 1fr auto;gap:clamp(1rem,4vw,3rem);
+    align-items:flex-start;padding:2.4rem 1.4rem;margin:0 -1.4rem;
+    border-bottom:1px solid var(--line);color:inherit;position:relative;
+    border-radius:14px;cursor:pointer;
+    transition:background .45s ease;
+    opacity:0;animation:rise .9s forwards;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .project::before{
+    content:"";position:absolute;left:0;top:2.9rem;
+    width:3px;height:0;border-radius:3px;background:var(--accent);transition:height .4s ease;
+  }
+  .project:hover{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 9%,transparent),transparent 70%)}
+  .project.expanded{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 7%,transparent),transparent 78%)}
+  .project:hover::before,.project.expanded::before{height:1.8rem}
+
+  .proj-index{
+    font-family:var(--mono);font-size:.9rem;color:var(--muted);
+    letter-spacing:.05em;padding-top:.55rem;transition:color .35s;
+  }
+  .project:hover .proj-index,.project.expanded .proj-index{color:var(--accent)}
+
+  .proj-head{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:.7rem}
+  .proj-title{font-size:clamp(1.7rem,4.4vw,3rem);font-weight:400;line-height:1;letter-spacing:-.01em}
+  .proj-type{
+    font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+    padding:.34rem .6rem;border:1px solid var(--line-2);border-radius:100px;color:var(--muted);white-space:nowrap;
+  }
+  .proj-type.live{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+  .proj-desc{
+    color:color-mix(in srgb,var(--ink) 72%,transparent);
+    font-size:clamp(.98rem,1.5vw,1.12rem);line-height:1.5;font-weight:300;max-width:54ch;
+  }
+  .proj-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
+  .proj-tags span{
+    font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;color:var(--muted);
+    padding:.2rem .55rem;border:1px solid var(--line);border-radius:6px;
+  }
+
+  .proj-toggle{
+    font-size:1.6rem;color:var(--muted);line-height:1;width:30px;text-align:center;
+    flex-shrink:0;padding-top:.35rem;transition:transform .35s ease,color .3s;
+  }
+  .project:hover .proj-toggle,.project.expanded .proj-toggle{color:var(--accent)}
+  .project.expanded .proj-toggle{transform:rotate(45deg)}
+
+  /* expandable detail */
+  .proj-detail{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .45s ease,opacity .35s ease}
+  .proj-detail-inner{overflow:hidden;min-height:0}
+  .project.expanded .proj-detail{grid-template-rows:1fr;opacity:1}
+  .detail-body{padding-top:1.4rem;margin-top:1.3rem;border-top:1px solid var(--line)}
+  .detail-text{font-size:1rem;line-height:1.6;color:color-mix(in srgb,var(--ink) 75%,transparent);font-weight:300;max-width:58ch}
+
+  .expect{margin-top:1.3rem}
+  .expect-label{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .expect ul{list-style:none;margin-top:.7rem;display:flex;flex-direction:column;gap:.55rem}
+  .expect li{position:relative;padding-left:1.2rem;font-size:.95rem;line-height:1.45;color:color-mix(in srgb,var(--ink) 78%,transparent)}
+  .expect li::before{content:"";position:absolute;left:0;top:.5em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+
+  .open-btn{
+    display:inline-flex;align-items:center;gap:.5rem;margin-top:1.6rem;min-height:44px;
+    padding:.7rem 1.4rem;border-radius:9px;background:var(--accent);color:var(--on-accent);
+    font-family:var(--mono);font-size:.8rem;letter-spacing:.04em;text-decoration:none;font-weight:500;
+    transition:transform .2s,filter .2s;
+  }
+  .open-btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+
+  /* ---------- footer ---------- */
+  footer{padding:7vh 0 5vh;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:2rem;color:var(--muted)}
+  footer .big{font-size:clamp(1.4rem,3vw,2.1rem);color:var(--ink);font-weight:300;font-style:italic;max-width:20ch;line-height:1.2}
+  footer .right{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-align:right;line-height:2}
+  footer a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line-2);transition:color .25s,border-color .25s}
+  footer a:hover{color:var(--ink);border-color:var(--ink)}
+
+  @keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+
+  @media(max-width:640px){
+    .project{grid-template-columns:auto 1fr auto;gap:.9rem;padding:1.9rem .8rem;margin:0 -.8rem}
+    .project::before{top:2.3rem}
+    .proj-index{font-size:.78rem;padding-top:.4rem}
+    .proj-toggle{font-size:1.35rem;width:22px}
+    .meta .hide{display:none}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important}
+    .grain{display:none}
+  }
+</style>
+</head>
+<body>
+  <div class="glow" id="glow"></div>
+  <div class="grain"></div>
+
+  <div class="wrap">
+    <header>
+      <div class="wordmark"><span class="dot"></span>Samandar</div>
+      <div class="header-right">
+        <button class="theme-toggle" aria-label="Toggle light and dark theme"></button>
+        <div class="meta"><span class="hide">Index · 03 Systems&nbsp;&nbsp;/&nbsp;&nbsp;</span><a href="https://github.com/samandar44111" target="_blank">GitHub ↗</a></div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">Selected Work — 2026</div>
+      <h1>Building across markets, language, and <span class="accent">mathematics.</span></h1>
+      <p class="lede">A single place for everything I'm making — a live trading dashboard, a Korean study app, and a step-by-step math solver. Tap any card to see what it does, then open it.</p>
+    </section>
+
+    <section class="projects">
+      <div class="list-label"><span>The Projects</span><span>Tap a card for details</span></div>
+
+      <!-- ============ PROJECT 1 — TRADING BOT ============ -->
+      <article class="project" style="--accent:#e8b339; animation-delay:.7s" aria-expanded="false">
+        <div class="proj-index">01</div>
+        <div class="proj-main">
+          <div class="proj-head">
+            <h2 class="proj-title">Trading Bot</h2>
+            <span class="proj-type live">Live Demo</span>
+          </div>
+          <p class="proj-desc">A BTC/USDT paper-trading dashboard driven by an RSI + EMA strategy — updating live from the bot's own trades.</p>
+          <div class="proj-tags"><span>Python</span><span>RSI + EMA</span><span>Live Data</span></div>
+          <div class="proj-detail">
+            <div class="proj-detail-inner"><div class="detail-body">
+              <p class="detail-text">A Python bot runs an RSI + EMA strategy on a virtual machine, paper-trading BTC/USDT and pushing every trade to GitHub. This dashboard reads that data and visualises it in real time — no login, and no real money at risk.</p>
+              <div class="expect">
+                <span class="expect-label">What you'll see</span>
+                <ul>
+                  <li>Live BTC price, RSI, and daily profit / loss</li>
+                  <li>Current position and account equity</li>
+                  <li>A price chart with buy/sell markers, from 1H to all-time</li>
+                  <li>Everything auto-refreshes every 30 seconds</li>
+                </ul>
+              </div>
+              <a class="open-btn" href="https://samandar44111.github.io/Trading-bot/" target="_blank" rel="noopener">Open dashboard ↗</a>
+            </div></div>
+          </div>
+        </div>
+        <div class="proj-toggle">+</div>
+      </article>
+
+      <!-- ============ PROJECT 2 — LEARNING KOREAN ============ -->
+      <article class="project" style="--accent:#ee6c5a; animation-delay:.8s" aria-expanded="false">
+        <div class="proj-index">02</div>
+        <div class="proj-main">
+          <div class="proj-head">
+            <h2 class="proj-title">Learning Korean</h2>
+            <span class="proj-type live">Live Demo</span>
+          </div>
+          <p class="proj-desc">An interactive 한국어 study app — lessons, vocabulary, and spaced-repetition review, all in the browser.</p>
+          <div class="proj-tags"><span>JavaScript</span><span>PWA</span><span>Gamified</span></div>
+          <div class="proj-detail">
+            <div class="proj-detail-inner"><div class="detail-body">
+              <p class="detail-text">A study companion for learning Korean from the ground up. Work through themed lessons, build vocabulary with audio, and let spaced repetition resurface the words you keep forgetting. The interface speaks English, Russian, or Uzbek.</p>
+              <div class="expect">
+                <span class="expect-label">What you'll see</span>
+                <ul>
+                  <li>Themed lessons covering Hangul and vocabulary</li>
+                  <li>Audio pronunciation for every word</li>
+                  <li>XP, streaks, and mastery tracking</li>
+                  <li>A smart review mode that targets your weak words</li>
+                  <li>Installable as an app — works offline</li>
+                </ul>
+              </div>
+              <a class="open-btn" href="https://samandar44111.github.io/Dataquest/" target="_blank" rel="noopener">Open app ↗</a>
+            </div></div>
+          </div>
+        </div>
+        <div class="proj-toggle">+</div>
+      </article>
+
+      <!-- ============ PROJECT 3 — LINEAR EQUATION SOLVER ============ -->
+      <article class="project" style="--accent:#7c83ff; animation-delay:.9s" aria-expanded="false">
+        <div class="proj-index">03</div>
+        <div class="proj-main">
+          <div class="proj-head">
+            <h2 class="proj-title">Linear Equation Solver</h2>
+            <span class="proj-type live">Live Demo</span>
+          </div>
+          <p class="proj-desc">Solve systems of 1–5 variables with step-by-step Gaussian elimination — type the numbers, get the answer.</p>
+          <div class="proj-tags"><span>JavaScript</span><span>Linear Algebra</span><span>Step-by-step</span></div>
+          <div class="proj-detail">
+            <div class="proj-detail-inner"><div class="detail-body">
+              <p class="detail-text">A clean math tool for solving systems of linear equations. Pick how many variables you have, enter the coefficients, and it solves them using Gaussian elimination with partial pivoting — then shows the full working if you want to follow along.</p>
+              <div class="expect">
+                <span class="expect-label">What you'll see</span>
+                <ul>
+                  <li>Support for 1 to 5 variables</li>
+                  <li>An instant solution for each variable</li>
+                  <li>An optional step-by-step breakdown</li>
+                  <li>Example problems you can load with one tap</li>
+                </ul>
+              </div>
+              <a class="open-btn" href="https://samandar44111.github.io/Linear-equation/" target="_blank" rel="noopener">Open solver ↗</a>
+            </div></div>
+          </div>
+        </div>
+        <div class="proj-toggle">+</div>
+      </article>
+    </section>
+
+    <footer>
+      <div class="big">Three projects, kept under one roof.</div>
+      <div class="right">
+        Built by Samandar<br>
+        <a href="https://github.com/samandar44111" target="_blank">github.com/samandar44111</a><br>
+        © 2026
+      </div>
+    </footer>
+  </div>
+
+<script>
+  // pointer-reactive background glow (desktop)
+  var glow = document.getElementById('glow');
+  window.addEventListener('pointermove', function(e){
+    glow.style.setProperty('--mx', (e.clientX / window.innerWidth * 100) + '%');
+    glow.style.setProperty('--my', (e.clientY / window.innerHeight * 100) + '%');
+  });
+
+  // tap a card to expand its details (taps on the Open button are ignored here so the link works)
+  document.querySelectorAll('.project').forEach(function(card){
+    card.addEventListener('click', function(e){
+      if(e.target.closest('a')) return;
+      var open = card.classList.toggle('expanded');
+      card.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
+  // light / dark theme toggle (remembers choice when hosted)
+  function setTheme(light){
+    var root = document.documentElement;
+    if(light){ root.setAttribute('data-theme','light'); } else { root.removeAttribute('data-theme'); }
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if(meta){ meta.setAttribute('content', light ? '#f4f1ea' : '#0c0b10'); }
+    try{ localStorage.setItem('theme', light ? 'light' : 'dark'); }catch(e){}
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function(){
+    setTheme(document.documentElement.getAttribute('data-theme') !== 'light');
+  });
+</script>
+</body>
+</html>
